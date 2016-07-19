@@ -37,12 +37,6 @@
 ;; 1 stardict
 ;; ══════════
 
-;;   [[https://img.shields.io/badge/license-GPL_3-green.svg]]
-
-
-;; [[https://img.shields.io/badge/license-GPL_3-green.svg]]
-;; http://www.gnu.org/licenses/gpl-3.0.txt
-
 ;; 1.1 Description
 ;; ───────────────
 
@@ -57,7 +51,7 @@
 
 ;;   ┌────
 ;;   │ (require 'stardict)
-;;   │
+;;   │ 
 ;;   │ (setf stardict:dictionary-path "~/.local/share/stardict/dic")
 ;;   └────
 
@@ -69,7 +63,7 @@
 ;;   License, version 3 or any later version. See [COPYING] for details.
 
 
-;; [COPYING] file:COPYING
+;;   [COPYING] file:COPYING
 
 ;;; Code:
 
