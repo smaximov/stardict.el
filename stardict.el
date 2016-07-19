@@ -30,7 +30,6 @@
 
 ;; 1 stardict
 ;; .. 1.1 Usage
-;; .. 1.2 License
 
 
 ;; 1 stardict
@@ -52,16 +51,6 @@
 ;;   │ 
 ;;   │ (setf stardict:dictionary-path "~/.local/share/stardict/dic")
 ;;   └────
-
-
-;; 1.2 License
-;; ───────────
-
-;;   This program is distributed under the terms of GNU General Public
-;;   License, version 3 or any later version. See [COPYING] for details.
-
-
-;;   [COPYING] file:COPYING
 
 ;;; Code:
 

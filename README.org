@@ -57,7 +57,7 @@ Update package's commentary header if you have made changes to [[file:README.org
 
 Commit final changes and create pull request, describing briefly what it does.
 
-** License
+** License                                                         :noexport:
 
 This program is distributed under the terms of GNU General Public License,
 version 3 or any later version. See [[file:COPYING][COPYING]] for details.
