@@ -21,6 +21,42 @@ dictionary files:
   (setf stardict:dictionary-path "~/.local/share/stardict/dic")
 #+end_src
 
+** Contributing                                                    :noexport:
+
+*** Prerequisites
+
+You need [[https://github.com/cask/cask][Cask]] installed (see [[http://cask.readthedocs.io/en/latest/guide/installation.html][docs]]).
+
+*** Setup
+
+Clone the repository:
+
+#+begin_src bash
+  $ git clone git@github.com:smaximov/stardict.el.git
+#+end_src
+
+Install dependencies:
+
+#+begin_src bash
+  $ cask install
+#+end_src
+
+*** Preparing pull request
+
+Make sure all tests pass:
+
+#+begin_src bash
+  $ cask exec buttercup -L .
+#+end_src
+
+Update package's commentary header if you have made changes to [[file:README.org][README.org]] (do not edit commentary by hand!):
+
+#+begin_src bash
+  $ cask emacs --batch -l tools/update-commentary.el
+#+end_src
+
+Commit final changes and create pull request, describing briefly what it does.
+
 ** License
 
 This program is distributed under the terms of GNU General Public License,
