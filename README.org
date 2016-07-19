@@ -1,0 +1,23 @@
+* stardict
+
+[[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg]]
+
+** Description
+
+*stardict* provides the Emacs interface to StarDict dictionary files.
+
+** Usage
+
+Start by loading *stardict* and specifying the location to search for
+dictionary files:
+
+#+begin_src elisp
+  (require 'stardict)
+
+  (setf stardict:dictionary-path "~/.local/share/stardict/dic")
+#+end_src
+
+** License
+
+This program is distributed under the terms of GNU General Public License,
+version 3 or any later version. See [[file:COPYING][COPYING]] for details.
