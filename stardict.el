@@ -37,6 +37,9 @@
 ;; 1 stardict
 ;; ══════════
 
+;;   *Note*: this package is WIP and is not really usable at the moment.
+
+
 ;; 1.1 Description
 ;; ───────────────
 

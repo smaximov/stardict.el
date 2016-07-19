@@ -1,9 +1,9 @@
 * stardict
 
-*** Badges                                                         :noexport:
-
+:LOGBOOK:
 [[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg]]
 [[https://travis-ci.org/smaximov/stardict.el.svg?branch=master][file:https://travis-ci.org/smaximov/stardict.el.svg?branch=master]]
+:END:
 
 *Note*: this package is WIP and is not really usable at the moment.
 
