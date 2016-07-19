@@ -2,6 +2,8 @@
 
 [[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg]]
 
+*Note*: this package is WIP and is not really usable at the moment.
+
 ** Description
 
 *stardict* provides the Emacs interface to StarDict dictionary files.
