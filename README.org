@@ -5,11 +5,9 @@
 [[https://travis-ci.org/smaximov/stardict.el.svg?branch=master][file:https://travis-ci.org/smaximov/stardict.el.svg?branch=master]]
 :END:
 
-*Note*: this package is WIP and is not really usable at the moment.
-
-** Description
-
 *stardict* provides the Emacs interface to StarDict dictionary files.
+
+*Note*: this package is WIP and is not really usable at the moment.
 
 ** Usage
 

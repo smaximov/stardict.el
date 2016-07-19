@@ -29,24 +29,19 @@
 ;; ─────────────────
 
 ;; 1 stardict
-;; .. 1.1 Description
-;; .. 1.2 Usage
-;; .. 1.3 License
+;; .. 1.1 Usage
+;; .. 1.2 License
 
 
 ;; 1 stardict
 ;; ══════════
 
+;;   *stardict* provides the Emacs interface to StarDict dictionary files.
+
 ;;   *Note*: this package is WIP and is not really usable at the moment.
 
 
-;; 1.1 Description
-;; ───────────────
-
-;;   *stardict* provides the Emacs interface to StarDict dictionary files.
-
-
-;; 1.2 Usage
+;; 1.1 Usage
 ;; ─────────
 
 ;;   Start by loading *stardict* and specifying the location to search for
@@ -59,7 +54,7 @@
 ;;   └────
 
 
-;; 1.3 License
+;; 1.2 License
 ;; ───────────
 
 ;;   This program is distributed under the terms of GNU General Public
