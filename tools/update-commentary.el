@@ -28,18 +28,9 @@
 (require 'ox)
 (require 'rx)
 
-(defconst package-root (f-parent (f-dirname load-file-name)))
+(defconst package-root (f-parent (f-dirname (or load-file-name buffer-file-name))))
 (defconst package-file (f-expand "stardict.el" package-root))
 (defconst package-readme (f-expand "README.org" package-root))
-
-(defun readme-as-plain-text ()
-  "Convert README.org to plain text."
-  (with-temp-buffer
-    (insert-file-contents package-readme)
-    (let* ((converted-readme (org-export-as 'ascii nil nil nil
-                                            '(:ascii-charset utf-8)))
-           (toc-start (string-match "^Table of Contents" converted-readme)))
-      (substring converted-readme toc-start))))
 
 (defun section-header-regexp (section)
   "Return regexp to match ';;; SECTION:' library header."
@@ -55,6 +46,44 @@
 
 (defconst commentary-header-regexp (section-header-regexp "Commentary"))
 (defconst code-header-regexp (section-header-regexp "Code"))
+
+(defconst drawers-keyword-regexp
+  (rx line-start
+      "#+DRAWERS:"
+      (one-or-more space)
+      (group (zero-or-more (one-or-more (or word
+                                            (char ?- ?_)))
+                           (zero-or-more space)))
+      line-end))
+
+(defun parse-drawers ()
+  "Parse in-buffer #+DRAWERS keyword."
+  (save-excursion
+    (goto-char (point-min))
+    (let ((case-fold-search t))         ; ingore case
+      (when (re-search-forward drawers-keyword-regexp nil t)
+        (split-string (match-string 1) "[ \t]+" t "[ \t]+")))))
+
+;; Silence warnings for Org-mode >= v8.3
+(defvar org-drawers)
+
+(defun org-drawers ()
+  "Return the list of known Org-mode drawers.
+
+This function is provided for compatibility with Org-mode versions < 8.3.
+On later versions the return value is always nil."
+  (when (version< org-version "8.3")
+    (append org-drawers (parse-drawers))))
+
+(defun readme-as-plain-text ()
+  "Convert README.org to plain text."
+  (with-temp-buffer
+    (insert-file-contents package-readme)
+    (let* ((org-drawers (org-drawers))  ; set drawers to parse for Org-mode < v8.3
+           (converted-readme (org-export-as 'ascii nil nil nil
+                                            '(:ascii-charset utf-8)))
+           (toc-start (string-match "^Table of Contents" converted-readme)))
+      (substring converted-readme toc-start))))
 
 (let ((converted-readme (readme-as-plain-text)))
   (find-file package-file)
