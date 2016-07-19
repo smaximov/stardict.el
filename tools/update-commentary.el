@@ -61,7 +61,12 @@
   (let* ((commentary-section-start (1+ (re-search-forward commentary-header-regexp)))
          (commentary-section-end (progn
                                    (re-search-forward code-header-regexp)
-                                   (match-beginning 0))))
+                                   (match-beginning 0)))
+
+         (comment-style 'indent)
+         (comment-start ";")
+         (comment-end "")
+         (comment-padding " "))
     (kill-region commentary-section-start commentary-section-end)
     (goto-char commentary-section-start)
 
