@@ -21,6 +21,7 @@
 
 ;;; Code:
 
+(require 'undercover-init)
 (require 'buttercup)
 (require 'stardict)
 

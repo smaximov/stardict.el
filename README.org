@@ -47,7 +47,7 @@ Install dependencies:
 Make sure all tests pass:
 
 #+begin_src bash
-  $ cask exec buttercup -L .
+  $ cask exec buttercup -L . -L tests
 #+end_src
 
 Update package's commentary header if you have made changes to [[file:README.org][README.org]] (do not edit commentary by hand!):

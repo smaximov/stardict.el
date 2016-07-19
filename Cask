@@ -14,4 +14,5 @@
 
 (development
  (depends-on "buttercup")
- (depends-on "org"))
+ (depends-on "org")
+ (depends-on "undercover"))
