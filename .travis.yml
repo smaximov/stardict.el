@@ -10,6 +10,7 @@ install: cask
 script: cask exec buttercup -L . -L tests
 env:
   matrix:
+    - EVM_EMACS=emacs-24.3-travis
     - EVM_EMACS=emacs-24.4-travis
     - EVM_EMACS=emacs-24.5-travis
     - EVM_EMACS=emacs-25-pre-travis
