@@ -2,7 +2,7 @@
 
 :LOGBOOK:
 [[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg]]
-[[https://travis-ci.org/smaximov/stardict.el.svg?branch=master][file:https://travis-ci.org/smaximov/stardict.el.svg?branch=master]]
+[[https://travis-ci.org/smaximov/stardict.el][https://travis-ci.org/smaximov/stardict.el.svg?branch=master]]
 :END:
 
 *stardict* provides the Emacs interface to StarDict dictionary files.
