@@ -14,4 +14,4 @@
 
 (development
  (depends-on "buttercup")
- (depends-on "org-mode"))
+ (depends-on "org"))
