@@ -32,6 +32,21 @@
 (defconst package-file (f-expand "stardict.el" package-root))
 (defconst package-readme (f-expand "README.org" package-root))
 
+(defun custom-ascii-template (contents info)
+  "Return complete document string after conversion.
+CONTENTS is the transcoded contents string.  INFO is a plist
+holding export options."
+  (concat
+   (let ((depth (plist-get info :with-toc)))
+     (when depth
+       (concat
+        (org-ascii--build-toc info (and (wholenump depth) depth))
+        "\n\n\n")))
+   contents))
+
+(org-export-define-derived-backend 'custom-ascii 'ascii
+  :translate-alist '((template . custom-ascii-template)))
+
 (defun section-header-regexp (section)
   "Return regexp to match ';;; SECTION:' library header."
   (rx-to-string `(seq line-start
@@ -79,11 +94,9 @@ On later versions the return value is always nil."
   "Convert README.org to plain text."
   (with-temp-buffer
     (insert-file-contents package-readme)
-    (let* ((org-drawers (org-drawers))  ; set drawers to parse for Org-mode < v8.3
-           (converted-readme (org-export-as 'ascii nil nil nil
-                                            '(:ascii-charset utf-8)))
-           (toc-start (string-match "^Table of Contents" converted-readme)))
-      (substring converted-readme toc-start))))
+    (let ((org-drawers (org-drawers)))  ; set drawers to parse for Org-mode < v8.3
+      (org-export-as 'custom-ascii nil nil nil
+                     '(:ascii-charset utf-8)))))
 
 (let ((converted-readme (readme-as-plain-text)))
   (find-file package-file)
@@ -91,7 +104,6 @@ On later versions the return value is always nil."
          (commentary-section-end (progn
                                    (re-search-forward code-header-regexp)
                                    (match-beginning 0)))
-
          (comment-style 'indent)
          (comment-start ";")
          (comment-end "")
