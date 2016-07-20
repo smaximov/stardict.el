@@ -48,7 +48,7 @@
 
 ;;   ┌────
 ;;   │ (require 'stardict)
-;;   │
+;;   │ 
 ;;   │ (setf stardict:dictionary-path "~/.local/share/stardict/dic")
 ;;   └────
 
