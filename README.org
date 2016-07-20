@@ -57,7 +57,7 @@ Update package's commentary header if you have made changes to [[file:README.org
   $ cask emacs --script tools/update-commentary.el
 #+end_src
 
-Commit final changes and create pull request, describing briefly what it does.
+Commit final changes and create a pull request, describing briefly what it does.
 
 ** License                                                         :noexport:
 
