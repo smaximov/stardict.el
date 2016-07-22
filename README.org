@@ -40,21 +40,21 @@ Clone the repository:
 Install dependencies:
 
 #+begin_src bash
-  $ cask install
+  $ make dep-install
 #+end_src
 
-*** Preparing pull request
+*** Preparing a pull request
 
 Make sure all tests pass:
 
 #+begin_src bash
-  $ cask exec buttercup -L . -L tests
+  $ make test
 #+end_src
 
 Update package's commentary header if you have made changes to [[file:README.org][README.org]] (do not edit commentary by hand!):
 
 #+begin_src bash
-  $ cask emacs --script tools/update-commentary.el
+  $ make update-headers
 #+end_src
 
 Commit final changes and create a pull request, describing briefly what it does.
