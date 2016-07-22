@@ -7,5 +7,5 @@
 
 (development
  (depends-on "buttercup")
- (depends-on "org")
+ (depends-on "org-doc")
  (depends-on "undercover"))
