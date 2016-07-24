@@ -14,7 +14,6 @@ test:
 	cask exec buttercup -L . -L tests
 
 update-headers:
-	cask emacs --batch -l org-doc-cli -f org-doc -- \
-		README.org stardict.el
+	cask exec org-doc -c utf-8 README.org stardict.el
 
 .PHONY: help dep-install test update-headers
