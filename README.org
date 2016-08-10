@@ -20,7 +20,7 @@ dictionary files:
 #+begin_src elisp
   (require 'stardict)
 
-  (setf stardict:dictionary-path "~/.local/share/stardict/dic")
+  (setf stardict-dictionary-path "~/.local/share/stardict/dic")
 #+end_src
 
 ** Contributing                                                    :noexport:

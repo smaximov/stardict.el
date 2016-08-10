@@ -25,30 +25,30 @@
 (require 'buttercup)
 (require 'stardict)
 
-(defconst stardict::root-dir
+(defconst stardict--root-dir
   (f-dirname (symbol-file 'stardict)))
 
-(defconst stardict::test-data-dir
-  (f-expand "tests/data" stardict::root-dir))
+(defconst stardict--test-data-dir
+  (f-expand "tests/data" stardict--root-dir))
 
-(defconst stardict::sample-dict
+(defconst stardict--sample-dict
   "stardict-en-ru-sample")
 
-(defconst stardict::sample-dict-path
-  (f-join stardict::test-data-dir stardict::sample-dict))
+(defconst stardict--sample-dict-path
+  (f-join stardict--test-data-dir stardict--sample-dict))
 
 (describe "Dictionaries discovery"
   (it "should detect info files"
-    (expect (stardict::dictionary-info-file stardict::sample-dict-path)
-            :to-equal (f-join stardict::sample-dict-path "en-ru.ifo")))
+    (expect (stardict--dictionary-info-file stardict--sample-dict-path)
+            :to-equal (f-join stardict--sample-dict-path "en-ru.ifo")))
 
   (it "should find index and dict files using dictionary name"
-    (let ((dict-name (f-base (stardict::dictionary-info-file stardict::sample-dict-path))))
-      (expect (stardict::dictionary-index-file stardict::sample-dict-path dict-name)
-              :to-equal (f-join stardict::sample-dict-path "en-ru.idx"))
+    (let ((dict-name (f-base (stardict--dictionary-info-file stardict--sample-dict-path))))
+      (expect (stardict--dictionary-index-file stardict--sample-dict-path dict-name)
+              :to-equal (f-join stardict--sample-dict-path "en-ru.idx"))
 
-      (expect (stardict::dictionary-dict-file stardict::sample-dict-path dict-name)
-              :to-equal (f-join stardict::sample-dict-path "en-ru.dict")))))
+      (expect (stardict--dictionary-dict-file stardict--sample-dict-path dict-name)
+              :to-equal (f-join stardict--sample-dict-path "en-ru.dict")))))
 
 (provide 'test-discovery)
 ;;; test-discovery.el ends here

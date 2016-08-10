@@ -49,7 +49,7 @@
 ;;   ┌────
 ;;   │ (require 'stardict)
 ;;   │ 
-;;   │ (setf stardict:dictionary-path "~/.local/share/stardict/dic")
+;;   │ (setf stardict-dictionary-path "~/.local/share/stardict/dic")
 ;;   └────
 
 ;;; Code:
@@ -65,14 +65,14 @@
   "Interface to StarDict dictionaries"
   :group 'applications)
 
-(defcustom stardict:dictionary-path nil
+(defcustom stardict-dictionary-path nil
   "Path to StarDict dictionaries, which can be a single directory or a list of directories."
   :tag "Dictionary Path"
   :group 'stardict
   :type '(choice directory
                  (repeat directory)))
 
-(defun stardict::locate-file (path &optional suffixes base-name)
+(defun stardict--locate-file (path &optional suffixes base-name)
   "Locate the first file found in PATH which satisfies certain criteria.
 
 SUFFIXES is a list of suffixes appended to search patterns when searching.
@@ -88,25 +88,25 @@ the search uses wilcard patterns."
           (-when-let (file (first (f-glob (concat "*" it) path)))
             (return-from loop file)))))))
 
-(defun stardict::dictionary-info-file (path)
+(defun stardict--dictionary-info-file (path)
   "Return the first '*.ifo' file found in PATH, if any."
-  (stardict::locate-file path '(".ifo")))
+  (stardict--locate-file path '(".ifo")))
 
-(defun stardict::dictionary-index-file (path &optional dict-name)
+(defun stardict--dictionary-index-file (path &optional dict-name)
   "Return the first '*.idx' ('*.idx.gz') file found in PATH, if any.
 
 If DICT-NAME is not nil, its value is used as the base name of
 the '*.idx' file during search.  DICT-NAME should match the base name of the
 corresponding '*.ifo' file."
-  (stardict::locate-file path '(".idx.gz" ".idx") dict-name))
+  (stardict--locate-file path '(".idx.gz" ".idx") dict-name))
 
-(defun stardict::dictionary-dict-file (path &optional dict-name)
+(defun stardict--dictionary-dict-file (path &optional dict-name)
   "Return the first '*.dict' ('*.dict.dz') file found in PATH, if any.
 
 If DICT-NAME is not nil, its value is used as the base name of
 the '*.dict' file during search.  DICT-NAME should match the base name of the
 corresponding '*.ifo' file."
-  (stardict::locate-file path '(".dict.dz" ".dict") dict-name))
+  (stardict--locate-file path '(".dict.dz" ".dict") dict-name))
 
 (provide 'stardict)
 ;;; stardict.el ends here
