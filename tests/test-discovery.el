@@ -28,7 +28,7 @@
     (expect (stardict--dictionary-info-file stardict--sample-dictionary-path)
             :to-equal stardict--sample-dictionary-info-file))
 
-  (it "should find index and dict files using dictionary name"
+  (it "should find index and dict files using the dictionary name"
     (let ((dict-name (f-base (stardict--dictionary-info-file stardict--sample-dictionary-path))))
       (expect (stardict--dictionary-index-file stardict--sample-dictionary-path dict-name)
               :to-equal stardict--sample-dictionary-index-file)
