@@ -5,7 +5,7 @@
 ;; Author: Sergei Maximov <s.b.maximov@gmail.com>
 ;; Created: 19 Jul 2016
 ;; Version: 0.1.0
-;; Package-Requires: ((dash "2.0") (emacs "24.3") (f "0.18") (ht "2.0") (log4e "0.3.0"))
+;; Package-Requires: ((dash "2.0") (emacs "24.4") (f "0.18") (ht "2.0") (log4e "0.3.0"))
 ;; Keywords: dict
 
 ;; This file is not part of GNU Emacs.
@@ -48,7 +48,7 @@
 
 ;;   ┌────
 ;;   │ (require 'stardict)
-;;   │ 
+;;   │
 ;;   │ (setf stardict-dictionary-path "~/.local/share/stardict/dic")
 ;;   └────
 
