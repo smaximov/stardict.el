@@ -1,4 +1,4 @@
-;;; undercover-init.el --- setup undercover.el -*- lexical-binding: t -*-
+;;; setup-tests.el --- setup tests and define helpers  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2016 Sergei Maximov
 
@@ -24,5 +24,30 @@
 (when (require 'undercover nil t)
   (undercover "*.el" (:exclude "tools/*.el")))
 
-(provide 'undercover-init)
-;;; undercover-init.el ends here
+(require 'buttercup)
+
+(require 'stardict)
+
+(defconst stardict--root-dir
+  (f-dirname (symbol-file 'stardict)))
+
+(defconst stardict--test-data-dir
+  (f-expand "tests/data" stardict--root-dir))
+
+(defconst stardict--sample-dictionary
+  "stardict-en-ru-sample")
+
+(defconst stardict--sample-dictionary-path
+  (f-join stardict--test-data-dir stardict--sample-dictionary))
+
+(defconst stardict--sample-dictionary-info-file
+  (f-join stardict--sample-dictionary-path "en-ru.ifo"))
+
+(defconst stardict--sample-dictionary-index-file
+  (f-join stardict--sample-dictionary-path "en-ru.idx"))
+
+(defconst stardict--sample-dictionary-dict-file
+  (f-join stardict--sample-dictionary-path "en-ru.dict"))
+
+(provide 'setup-tests)
+;;; setup-tests.el ends here
