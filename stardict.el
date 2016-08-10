@@ -5,7 +5,7 @@
 ;; Author: Sergei Maximov <s.b.maximov@gmail.com>
 ;; Created: 19 Jul 2016
 ;; Version: 0.1.0
-;; Package-Requires: ((dash "2.0") (emacs "24.4") (f "0.18") (ht "2.0") (log4e "0.3.0"))
+;; Package-Requires: ((cl-lib "0.4") (dash "2.0") (emacs "24.4") (f "0.18") (ht "2.0") (log4e "0.3.0"))
 ;; Keywords: dict
 
 ;; This file is not part of GNU Emacs.
@@ -55,6 +55,7 @@
 ;;; Code:
 
 (require 'dash)
+(require 'cl-lib)
 (require 'f)
 (require 'ht)
 (require 'log4e)
@@ -83,10 +84,10 @@ the search uses wilcard patterns."
   (let ((suffixes (or suffixes '(""))))
     (if base-name
         (locate-file base-name (list (f-full path)) suffixes)
-      (block loop
+      (cl-block loop
         (--each suffixes
-          (-when-let (file (first (f-glob (concat "*" it) path)))
-            (return-from loop file)))))))
+          (-when-let (file (cl-first (f-glob (concat "*" it) path)))
+            (cl-return-from loop file)))))))
 
 (defun stardict--dictionary-info-file (path)
   "Return the first '*.ifo' file found in PATH, if any."
