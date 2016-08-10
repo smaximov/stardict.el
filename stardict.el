@@ -59,6 +59,7 @@
 (require 'f)
 (require 'ht)
 (require 'log4e)
+(require 'rx)
 
 (log4e:deflogger "stardict" "%t [%l] %m" "%H:%M:%S")
 
@@ -72,6 +73,31 @@
   :group 'stardict
   :type '(choice directory
                  (repeat directory)))
+
+(cl-defstruct (stardict--info (:constructor stardict--make-info)
+                              (:copier stardict--copy-info))
+  version book-name word-count syn-word-count idx-file-size idx-offset-bits
+  author email website description date same-type-sequence)
+
+(defconst stardict--info-header-regexp "^StarDict's dict ifo file$")
+(defconst stardict--info-version-regexp
+  (rx line-start
+      "version="
+      (group (or "2.4.2" "3.0.0"))
+      line-end))
+
+(defun stardict--parse-info (file)
+  "Parse \"*.ifo\" file FILE."
+  (let ((info (stardict--make-info)))
+    (with-temp-buffer
+      (insert-file-contents file)
+      (unless (looking-at-p stardict--info-header-regexp)
+        (user-error "Failed to parse %S: invalid header" file))
+      (forward-line)
+      (unless (looking-at stardict--info-version-regexp)
+        (user-error "Failed to parse %S: invalid version" file))
+      (setf (stardict--info-version info) (match-string 1)))
+    info))
 
 (defun stardict--locate-file (path &optional suffixes base-name)
   "Locate the first file found in PATH which satisfies certain criteria.
