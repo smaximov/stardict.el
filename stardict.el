@@ -175,19 +175,18 @@ match group.")
                       (buffer-substring-no-properties (line-beginning-position)
                                                       (line-end-position))))
         (let* ((option (match-string 1))
-               (value (match-string 2))
                (slot (stardict--info-option-slot option))
-               (transform-fun (stardict--info-option-transform-fun option)))
-          (setf (cl-struct-slot-value 'stardict--info slot info)
-                (funcall transform-fun value)))
+               (transform-fun (stardict--info-option-transform-fun option))
+               (value (funcall transform-fun (match-string 2))))
+          (setf (cl-struct-slot-value 'stardict--info slot info) value))
         (forward-line 1))
 
+      ;; Check the presence of required options
       (--each stardict--info-required-options
         (unless (cl-struct-slot-value 'stardict--info
                                       (stardict--info-option-slot it)
                                       info)
           (user-error "Required option %S not defined" it)))
-
       (when (and (equal (stardict--info-version info) "3.0.0")
                  (null (stardict--info-idx-offset-bits info)))
         (user-error "Required option \"idxoffsetbits\" not defined")))
