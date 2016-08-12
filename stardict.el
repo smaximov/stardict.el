@@ -178,7 +178,7 @@ match group.")
                (slot (stardict--info-option-slot option))
                (transform-fun (stardict--info-option-transform-fun option))
                (value (funcall transform-fun (match-string 2))))
-          (setf (cl-struct-slot-value 'stardict--info slot info) value))
+          (setf (aref info (cl-struct-slot-offset 'stardict--info slot)) value))
         (forward-line 1))
 
       ;; Check the presence of required options
