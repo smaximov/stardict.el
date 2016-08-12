@@ -74,29 +74,123 @@
   :type '(choice directory
                  (repeat directory)))
 
+(defconst stardict--info-options-alist
+  '(("bookname" book-name)
+    ("wordcount" word-count stardict--string-to-integer)
+    ("idxfilesize" idx-file-size stardict--string-to-integer)
+    ("synwordcount" syn-word-count stardict--string-to-integer)
+    ("idxoffsetbits" idx-offset-bits stardict--string-to-integer)
+    ("author" author)
+    ("email" email)
+    ("website" website)
+    ("description" description stardict--info-parse-description)
+    ("date" date)
+    ("sametypesequence" same-type-sequence))
+  "A list of ifo options and corresponding `stardict--info' slots.
+
+The list takes values in form
+    (OPTION-NAME SLOT-NAME [TRANSFORM-FUN]).
+
+OPTION-NAME is a name of an ifo option, as defined in the stardict file format.
+SLOT-NAME is the corresponding `stardict--info' slot.
+Optional TRANSFORM-FUN, if specified, is a function which is applied to the
+option value.")
+
+(defun stardict--info-option-slot (option)
+  "Return the corresponding `stardict--info' slot for OPTION."
+  (nth 1 (assoc option stardict--info-options-alist)))
+
+(defun stardict--info-option-transform-fun (option)
+  "Return the corresponding transform function for OPTION.
+
+If `stardict--info-option-alist' has a corresponding TRANSFORM-FUN entry,
+return that entry; otherwise, return `identity'."
+  (or (nth 2 (assoc option stardict--info-options-alist))
+      #'identity))
+
+(defconst stardict--info-required-options
+  '("bookname" "wordcount" "idxfilesize")
+  "A list of required ifo options.")
+
 (cl-defstruct (stardict--info (:constructor stardict--make-info)
                               (:copier stardict--copy-info))
   version book-name word-count syn-word-count idx-file-size idx-offset-bits
   author email website description date same-type-sequence)
 
-(defconst stardict--info-header-regexp "^StarDict's dict ifo file$")
+(defconst stardict--info-header-regexp "^StarDict's dict ifo file$"
+  "A regular expression to match the ifo header.")
+
 (defconst stardict--info-version-regexp
   (rx line-start
       "version="
       (group (or "2.4.2" "3.0.0"))
-      line-end))
+      line-end)
+  "A regular expression to match the ifo version string.
+
+Matched version is stored in the first match group.")
+
+(defun stardict--string-to-integer (string)
+  "Parse STRING as a decimal integer and return the integer.
+
+Signal `user-error' if STRING cannot be parsed as an integer."
+  (let ((parsed (string-to-number string)))
+    (if (zerop parsed)
+        (user-error "Failed to parse %S as an integer" string)
+      parsed)))
+
+(defun stardict--info-parse-description (description)
+  "Parse DESCRIPTION and return it as a list of lines."
+  (split-string description "<br>" t))
+
+(defconst stardict--info-option-regexp
+  (rx-to-string `(seq line-start
+                      (group (or ,@(-map #'car stardict--info-options-alist)))
+                      "="
+                      (group (zero-or-more not-newline))
+                      line-end))
+  "A regular expression to match an ifo option string.
+
+Option name is stored in the first match group, option value - in the second
+match group.")
 
 (defun stardict--parse-info (file)
   "Parse \"*.ifo\" file FILE."
   (let ((info (stardict--make-info)))
     (with-temp-buffer
       (insert-file-contents file)
+
       (unless (looking-at-p stardict--info-header-regexp)
         (user-error "Failed to parse %S: invalid header" file))
-      (forward-line)
+      (forward-line 1)
+
       (unless (looking-at stardict--info-version-regexp)
         (user-error "Failed to parse %S: invalid version" file))
-      (setf (stardict--info-version info) (match-string 1)))
+      (setf (stardict--info-version info) (match-string 1))
+      (forward-line 1)
+
+      (while (not (eobp))
+        (unless (looking-at stardict--info-option-regexp)
+          (user-error "Failed to parse %S: invalid option string %S"
+                      file
+                      (buffer-substring-no-properties (line-beginning-position)
+                                                      (line-end-position))))
+        (let* ((option (match-string 1))
+               (value (match-string 2))
+               (slot (stardict--info-option-slot option))
+               (transform-fun (stardict--info-option-transform-fun option)))
+          (setf (cl-struct-slot-value 'stardict--info slot info)
+                (funcall transform-fun value)))
+        (forward-line 1))
+
+      (--each stardict--info-required-options
+        (unless (cl-struct-slot-value 'stardict--info
+                                      (stardict--info-option-slot it)
+                                      info)
+          (user-error "Required option %S not defined" it)))
+
+      (when (and (equal (stardict--info-version info) "3.0.0")
+                 (null (stardict--info-idx-offset-bits info)))
+        (user-error "Required option \"idxoffsetbits\" not defined")))
     info))
 
 (defun stardict--locate-file (path &optional suffixes base-name)

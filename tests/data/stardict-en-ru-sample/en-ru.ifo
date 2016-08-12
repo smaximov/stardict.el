@@ -2,5 +2,6 @@ StarDict's dict ifo file
 version=2.4.2
 wordcount=4
 idxfilesize=50
+description=Sample en-ru dictionary<br> (for testing purpose only)
 bookname=en-ru
 sametypesequence=m
