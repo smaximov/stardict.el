@@ -28,7 +28,7 @@
   (it "should parse sample info files"
     (expect (lambda ()
               (setf info (stardict--parse-info stardict--sample-dictionary-info-file)))
-            :not :to-throw 'user-error)
+            :not :to-throw 'error)
     (expect (stardict--info-version info)
             :to-equal "2.4.2")
     (expect (stardict--info-word-count info)
